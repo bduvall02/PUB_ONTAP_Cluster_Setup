@@ -1,0 +1,58 @@
+##########################################################
+# Variable File for 'netapp_full_install_multi-part.yml' #
+##########################################################
+
+# Cluster Login
+clusterip: 192.168.0.101
+user: ansible
+pass: Netapp1!
+https_option: true
+validate_certs_option: false
+
+# Variables for '01_install_licenses_setup_ntp.yml'
+clustername: cluster1
+ntpservers: 192.168.0.1
+timezone: EST5EDT
+
+# Variables for '02_create_aggregate.yml'
+aggrrootoldname: aggr0_cluster1_01,aggr0_cluster1_02
+aggrrootnewname: root_n01,root_n02
+aggrdataname: n01_data,n02_data
+diskcount: 20
+
+# Variables for '03_create_svm.yml'
+svmname: SVM1
+rootvolname: SVM1_root
+rootvolaggr: n01_data
+rootvolsecurity: unix
+allowedaggrs: n01_data,n02_data
+allowedprotocols: nfs
+nfsclientmatchsubnet: 192.168.2.0/24
+svmdnsdomain: demo.netapp.com
+svmdnsservers: 192.168.0.253
+nfsvolname1: NFS_vol1
+nfsaggr: n01_data
+nfsvolsize: 5 # Size is in GB
+
+# Variables for '04_network_setup.yml'
+clustername: cluster1
+vlan: 5 # NFS VLAN
+parentinterface: e0d # Interface where VLAN will be created
+broadcastname: NFS
+broadcastports: ["cluster1-01:e0d-5,cluster1-02:e0d-5"] # Add ports here, multiple ports use comma's
+subnetname: NFS-Subnet
+subnetnetwork: 192.168.2.0/24
+subnetiprange: ["192.168.2.51-192.168.2.52"]
+lifinterfacename: nfs_lif01
+lifhomeport: e0d-5
+lifhomenode: cluster1-01
+lifaddress: 192.168.2.51
+lifnetmask: 255.255.255.0
+vservername: SVM1
+
+# Variables for '05_create_volume.yml'
+aggr: n02_data
+nfsvolname2: NFS_vol2
+vservername: SVM1
+nfsvolsize2: 10 # Size is in GB
+
