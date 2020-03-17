@@ -46,9 +46,26 @@
       ipspace: Default
       broadcast_domain: "{{ broadcastname }}"
       <<: *login
-  - name: Create NFS LIF
-    na_ontap_command:
-      command: ['network', 'interface', 'create', '-vserver', '"{{ vservername }}"', '-home-node', '"{{ lifhomenode }}"', '-home-port', '"{{ lifhomeport }}"', '-data-protocol', 'nfs', '-subnet-name', '"{{ subnetname }}"', '-failover-policy', 'system-defined', '-firewall-policy', 'data', '-lif', '"{{ lifinterfacename }}"']
-      privilege: admin
+  - name: Create LIF
+    na_ontap_interface:
+      state: present 
+      interface_name: "{{ lifinterfacename }}"
+      home_port: "{{ lifhomeport }}"
+      home_node: "{{ lifhomenode }}"
+      role: data
+      protocols: "{{ lifprotocols }}"
+      admin_status: up
+      failover_policy: system-defined
+      firewall_policy: data
+      is_auto_revert: true
+      address: "{{ lifaddress }}" 
+      netmask: "{{ lifnetmask }}"
+      dns_domain_name: "{{ svmdnsdomain }}"
+      vserver: "{{ vservername }}"
       <<: *login
+#  - name: Create NFS LIF
+#    na_ontap_command:
+#      command: ['network', 'interface', 'create', '-vserver', '"{{ vservername }}"', '-home-node', '"{{ lifhomenode }}"', '-home-port', '"{{ lifhomeport }}"', '-data-protocol', 'nfs', '-subnet-name', '"{{ subnetname }}"', '-failover-policy', 'system-defined', '-firewall-policy', 'data', '-lif', '"{{ lifinterfacename }}"']
+#      privilege: admin
+#      <<: *login
   - debug: msg="VLAN {{ vlan }}, broadcast domain {{ broadcastname }}, subnet {{ subnetname}} and NFS lif {{ lifinterfacename }} have been setup."
