@@ -1,0 +1,118 @@
+
+PLAY [NetApp licensing] *********************************************************************************************************************************************************************************************************************
+
+TASK [Install Licenses] *********************************************************************************************************************************************************************************************************************
+ok: [localhost] => (item=OKEKFIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=AFCZFIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=MZZNGIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=YTXCHIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=WITGIIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=IDRVIIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=UXOKJIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=GSMZJIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=SMKOKIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=EHIDLIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=QBGSLIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=CWDHMIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=ALZKNIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=MFXZNIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=SSHASIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=ENFPSIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=OWYHUIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=ARWWUIAFXMSMUCAAAAAAAAAAAAAA)
+ok: [localhost] => (item=CSLYGOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=OMJNHOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=AHHCIOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=MBFRIOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=KQAVJOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=WKYJKOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=IFWYKOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=UZTNLOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=GURCMOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=SOPRMOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=EJNGNOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=QDLVNOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=OSGZOOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=GAPOTOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=SUMDUOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=CEGWVOLHSOVOGDAAAAAAAAAAAAAA)
+ok: [localhost] => (item=OYDLWOLHSOVOGDAAAAAAAAAAAAAA)
+
+TASK [Set NTP] ******************************************************************************************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [Set Timezone] *************************************************************************************************************************************************************************************************************************
+changed: [localhost]
+
+TASK [debug] ********************************************************************************************************************************************************************************************************************************
+ok: [localhost] => {
+    "msg": "Licenses have been installed on cluster1"
+}
+
+PLAY [NetApp Aggregate Setup] ***************************************************************************************************************************************************************************************************************
+
+TASK [Rename Root Aggregate] ****************************************************************************************************************************************************************************************************************
+ok: [localhost] => (item={u'aggrrootoldname': u'aggr0_cluster1_01', u'aggrrootnewname': u'root_n01'})
+ok: [localhost] => (item={u'aggrrootoldname': u'aggr0_cluster1_02', u'aggrrootnewname': u'root_n02'})
+
+TASK [Create and Online Aggregate] **********************************************************************************************************************************************************************************************************
+ok: [localhost] => (item={u'node': u'cluster1-01', u'aggrdataname': u'n01_data', u'diskcount': 20})
+ok: [localhost] => (item={u'node': u'cluster1-02', u'aggrdataname': u'n02_data', u'diskcount': 20})
+
+TASK [debug] ********************************************************************************************************************************************************************************************************************************
+ok: [localhost] => {
+    "msg": "Root Aggregates Renamed, Data Aggregates created"
+}
+
+PLAY [NetApp SVM Setup] *********************************************************************************************************************************************************************************************************************
+
+TASK [Create SVM] ***************************************************************************************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [Start NFS] ****************************************************************************************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [Create NFS Export Rule Under Default Policy] ******************************************************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [Add DNS Settings to SVM] **************************************************************************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [Create First NFS Volumes] *************************************************************************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ********************************************************************************************************************************************************************************************************************************
+ok: [localhost] => {
+    "msg": "SVM1 has been created along with 1 NFS volume called NFS_vol1"
+}
+
+PLAY [NetApp Network Setup] *****************************************************************************************************************************************************************************************************************
+
+TASK [Setup VLAN] ***************************************************************************************************************************************************************************************************************************
+ok: [localhost] => (item=cluster1-01)
+ok: [localhost] => (item=cluster1-02)
+
+TASK [Create Broadcast Domain] **************************************************************************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [Create LIF] ***************************************************************************************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ********************************************************************************************************************************************************************************************************************************
+ok: [localhost] => {
+    "msg": "VLAN 5, broadcast domain NFS, subnet NFS-Subnet and NFS lif nfs_lif01 have been setup."
+}
+
+PLAY [Create Additional NFS Volume] *********************************************************************************************************************************************************************************************************
+
+TASK [Volume Create] ************************************************************************************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ********************************************************************************************************************************************************************************************************************************
+ok: [localhost] => {
+    "msg": "Volume NFS_vol2 has been setup."
+}
+
+PLAY RECAP **********************************************************************************************************************************************************************************************************************************
+localhost                  : ok=19   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
