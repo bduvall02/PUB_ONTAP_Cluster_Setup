@@ -37,15 +37,6 @@
       ipspace: Default
       ports: "{{ broadcastports }}"
       <<: *login
-  - name: Create Subnet
-    na_ontap_net_subnet:
-      state: present
-      name: "{{ subnetname }}"
-      subnet: "{{ subnetnetwork }}"
-      ip_ranges: "{{ subnetiprange }}"
-      ipspace: Default
-      broadcast_domain: "{{ broadcastname }}"
-      <<: *login
   - name: Create LIF
     na_ontap_interface:
       state: present 
@@ -63,9 +54,4 @@
       dns_domain_name: "{{ svmdnsdomain }}"
       vserver: "{{ vservername }}"
       <<: *login
-#  - name: Create NFS LIF
-#    na_ontap_command:
-#      command: ['network', 'interface', 'create', '-vserver', '"{{ vservername }}"', '-home-node', '"{{ lifhomenode }}"', '-home-port', '"{{ lifhomeport }}"', '-data-protocol', 'nfs', '-subnet-name', '"{{ subnetname }}"', '-failover-policy', 'system-defined', '-firewall-policy', 'data', '-lif', '"{{ lifinterfacename }}"']
-#      privilege: admin
-#      <<: *login
   - debug: msg="VLAN {{ vlan }}, broadcast domain {{ broadcastname }}, subnet {{ subnetname}} and NFS lif {{ lifinterfacename }} have been setup."
