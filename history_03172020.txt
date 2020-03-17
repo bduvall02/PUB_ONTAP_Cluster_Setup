@@ -1,0 +1,69 @@
+    1  ls -l
+    2  cd /home/ansible
+    3  ls -l
+    4  sudo yum install git
+    5  exit
+    6  ls -l
+    7  pwd
+    8  cd /home/ansible/.
+    9  ls -l
+   10  git clone https://github.com/bduvall02/ONTAP_Cluster_Setup.git
+   11  ls -l
+   12  cd ONTAP
+   13  cd ONTAP_Cluster_Setup/
+   14  ls -l
+   15  rm history_03172020.txt 
+   16  git rm history_03172020.txt
+   17  git commit -a
+   18  git config --global billyd@netapp.com
+   19  git config --global billyd@netapp.com "billyd@netapp.com"
+   20  git config --global "billyd@netapp.com"
+   21  ls -l
+   22  vi 04_network_setup.yml 
+   23  vi 01_install_licenses_setup_ntp.yml 
+   24  vi 04_network_setup.yml 
+   25  vi 01_install_licenses_setup_ntp.yml 
+   26  vi variables.yml 
+   27  cat variables.yml | less
+   28  ansible-playbook netapp_full_install_multi-part.yml 
+   29  sudo yum install python-pip -y
+   30  exit
+   31  ls -l
+   32  cd /home/ansible
+   33  cd ONTAP_Cluster_Setup/
+   34  ls -l
+   35  ansible-playbook netapp_full_install_multi-part.yml 
+   36  cat variables.yml | less
+   37  exit
+   38  cd /home/ansible
+   39  ls -l
+   40  cd ONTAP
+   41  cd /ONTAP
+   42  cd /ONTAP
+   43  cd ONTAP_Cluster_Setup/
+   44  ls -l
+   45  ansible-playbook netapp_full_install_multi-part.yml 
+   46  vi netapp_full_install_multi-part.yml 
+   47  ansible-playbook netapp_full_install_multi-part.yml 
+   48  vi 04_network_setup.yml 
+   49  ansible-playbook netapp_full_install_multi-part.yml 
+   50  ansible-playbook netapp_full_install_multi-part.yml 
+   51  ls -l
+   52  git commit -a
+   53  git push
+   54  git push origin 
+   55  git commit -m "Updated Network Playbook"
+   56  git config "billyd@netapp.com"
+   57  git push -u origin master
+   58  git push
+   59  git push master
+   60  git push origin 
+   61  git push
+   62  git checkout master
+   63  git commit -a
+   64  git config --global user.name "bduvall02"
+   65  git config --global user.email "billyd@netapp.com"
+   66  git commit -a
+   67  git push
+   68  history
+   69  history > history_03172020.txt
