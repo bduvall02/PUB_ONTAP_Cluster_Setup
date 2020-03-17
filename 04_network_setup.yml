@@ -27,12 +27,13 @@
       parent_interface: "{{ parentinterface }}"
       <<: *login
     loop: # Add nodes below
-     - CLUSTER96-01
+     - "{{ clustername }}-01"
+     - "{{ clustername }}-02"
   - name: Create Broadcast Domain
     na_ontap_broadcast_domain:
       state: present
       name: "{{ broadcastname }}"
-      mtu: 1500
+      mtu: "1500"
       ipspace: Default
       ports: "{{ broadcastports }}"
       <<: *login

@@ -15,17 +15,20 @@ ntpservers: 192.168.0.1
 timezone: EST5EDT
 
 # Variables for '02_create_aggregate.yml'
-aggrrootoldname: aggr0_cluster1_01,aggr0_cluster1_02
-aggrrootnewname: root_n01,root_n02
-aggrdataname: n01_data,n02_data
-diskcount: 20
+root_aggrs:
+  - {aggrrootoldname: aggr0_cluster1_01, aggrrootnewname: root_n01}
+  - {aggrrootoldname: aggr0_cluster1_02, aggrrootnewname: root_n02}
+data_aggrs:
+  - {aggrdataname: n01_data, node: cluster1-01, diskcount: 20}
+  - {aggrdataname: n02_data, node: cluster1-02, diskcount: 20}
+
 
 # Variables for '03_create_svm.yml'
 svmname: SVM1
 rootvolname: SVM1_root
 rootvolaggr: n01_data
 rootvolsecurity: unix
-allowedaggrs: n01_data,n02_data
+allowedaggrs: "n01_data,n02_data"
 allowedprotocols: nfs
 nfsclientmatchsubnet: 192.168.2.0/24
 svmdnsdomain: demo.netapp.com
@@ -36,10 +39,10 @@ nfsvolsize: 5 # Size is in GB
 
 # Variables for '04_network_setup.yml'
 clustername: cluster1
-vlan: 5 # NFS VLAN
+vlan: "5" # NFS VLAN
 parentinterface: e0d # Interface where VLAN will be created
 broadcastname: NFS
-broadcastports: ["cluster1-01:e0d-5,cluster1-02:e0d-5"] # Add ports here, multiple ports use comma's
+broadcastports: ["{{ clustername }}-01:e0d-5","{{ clustername }}-02:e0d-5"] # Add ports here, multiple ports use comma's
 subnetname: NFS-Subnet
 subnetnetwork: 192.168.2.0/24
 subnetiprange: ["192.168.2.51-192.168.2.52"]

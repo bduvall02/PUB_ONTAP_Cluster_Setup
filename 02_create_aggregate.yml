@@ -23,16 +23,21 @@
     na_ontap_aggregate:
       state: present
       service_state: online
-      from_name: "{{ aggrrootoldname }}"
-      name: "{{ aggrrootnewname }}"
+      from_name: "{{ item.aggrrootoldname }}"
+      name: "{{ item.aggrrootnewname }}"
       <<: *login
+    with_items:
+      - "{{ root_aggrs }}"
   - name: Create and Online Aggregate
     na_ontap_aggregate:
       state: present
       service_state: online
-      name: "{{ aggrdataname }}"
-      disk_count: "{{ diskcount }}"
+      name: "{{ item.aggrdataname }}"
+      nodes: "{{ item.node }}"
+      disk_count: "{{ item.diskcount }}"
       wait_for_online: true
       time_out: 300
       <<: *login
-  - debug: msg="Aggregate {{ aggrrootoldname }} has been renamed to {{ aggrrootnewname }} and new data aggregate {{ aggrdataname }} has been created"
+    with_items:
+      - "{{ data_aggrs }}"
+  - debug: msg="Root Aggregates Renamed, Data Aggregates created"
