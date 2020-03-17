@@ -16,11 +16,11 @@ timezone: EST5EDT
 
 # Variables for '02_create_aggregate.yml'
 root_aggrs:
-  - {aggrrootoldname: aggr0_cluster1_01, aggrrootnewname: root_n01}
-  - {aggrrootoldname: aggr0_cluster1_02, aggrrootnewname: root_n02}
+  - {aggrrootoldname: "aggr0_{{ clustername }}_01", aggrrootnewname: root_n01}
+  - {aggrrootoldname: "aggr0_{{ clustername }}_02", aggrrootnewname: root_n02}
 data_aggrs:
-  - {aggrdataname: n01_data, node: cluster1-01, diskcount: 20}
-  - {aggrdataname: n02_data, node: cluster1-02, diskcount: 20}
+  - {aggrdataname: n01_data, node: "{{ clustername }}-01", diskcount: 20}
+  - {aggrdataname: n02_data, node: "{{ clustername }}-02", diskcount: 20}
 
 
 # Variables for '03_create_svm.yml'
@@ -38,7 +38,6 @@ nfsaggr: n01_data
 nfsvolsize: 5 # Size is in GB
 
 # Variables for '04_network_setup.yml'
-clustername: cluster1
 vlan: "5" # NFS VLAN
 parentinterface: e0d # Interface where VLAN will be created
 broadcastname: NFS
@@ -48,7 +47,7 @@ subnetnetwork: 192.168.2.0/24
 subnetiprange: ["192.168.2.51-192.168.2.52"]
 lifinterfacename: nfs_lif01
 lifhomeport: e0d-5
-lifhomenode: cluster1-01
+lifhomenode: "{{ clustername }}-01"
 lifaddress: 192.168.2.51
 lifnetmask: 255.255.255.0
 vservername: SVM1
