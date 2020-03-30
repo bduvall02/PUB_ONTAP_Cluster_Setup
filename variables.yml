@@ -10,6 +10,7 @@ pass: Netapp1!
 https_option: true
 validate_certs_option: false
 
+#Additional Comment for GitHub
 # Variables for '01_install_licenses_setup_ntp.yml'
 clustername: cluster1
 ntpservers: 192.168.0.1
